@@ -11,7 +11,7 @@ async function getDb() {
     if (!pool) {
       pool = new Pool({
         connectionString: env.DATABASE_URL,
-        ssl: env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+        ssl: (env.NODE_ENV === 'production' || (env.DATABASE_URL && (env.DATABASE_URL.includes('neon.tech') || env.DATABASE_URL.includes('sslmode=require')))) ? { rejectUnauthorized: false } : false,
       });
       console.log('Connected to PostgreSQL via DATABASE_URL');
     }
