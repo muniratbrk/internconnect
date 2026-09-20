@@ -47,7 +47,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     loadAdminData();
-  }, []);
+  }, [user?.id]);
 
   const handleToggleVerification = async (companyId, currentStatus) => {
     const nextStatus = !currentStatus;

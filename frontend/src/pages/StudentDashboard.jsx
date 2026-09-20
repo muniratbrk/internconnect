@@ -44,7 +44,7 @@ export default function StudentDashboard() {
       }
     }
     loadDashboardData();
-  }, []);
+  }, [user?.id]);
 
   const handleStartChat = async (app) => {
     try {

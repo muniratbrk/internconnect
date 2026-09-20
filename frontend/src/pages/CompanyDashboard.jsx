@@ -57,7 +57,7 @@ export default function CompanyDashboard() {
       }
     }
     loadPostings();
-  }, []);
+  }, [user?.id]);
 
   // Load applicants for selected posting
   const loadApplicants = async (jobId) => {

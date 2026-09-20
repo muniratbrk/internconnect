@@ -18,9 +18,10 @@ import {
 
 export default function Navbar() {
   const { user, profile, isAuthenticated, isStudent, isCompany, isAdmin, logout, demoLogin } = useAuth();
-  const { notifications, unreadCount, markRead, markAllRead } = useNotification();
+  const { notifications, unreadCount, markRead, markAllRead, toast } = useNotification();
   const [showNotifications, setShowNotifications] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [switchingRole, setSwitchingRole] = useState(null);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -29,10 +30,23 @@ export default function Navbar() {
   };
 
   const handleDemoSwitch = async (role) => {
-    await demoLogin(role);
-    if (role === 'student') navigate('/student-dashboard');
-    else if (role === 'company') navigate('/company-dashboard');
-    else if (role === 'admin') navigate('/admin-dashboard');
+    if (switchingRole) return;
+    setSwitchingRole(role);
+    try {
+      const res = await demoLogin(role);
+      const roleName = role === 'student' ? 'Student' : role === 'company' ? 'Company' : 'Admin';
+      toast(`Switched to ${roleName} mode (${res.profile?.full_name || res.profile?.company_name || 'Admin'})!`, 'success');
+      const targetPath = role === 'student' ? '/student-dashboard' : role === 'company' ? '/company-dashboard' : '/admin-dashboard';
+      if (window.location.pathname === targetPath) {
+        navigate(0);
+      } else {
+        navigate(targetPath);
+      }
+    } catch (err) {
+      toast(err.message || `Failed to switch to ${role}.`, 'error');
+    } finally {
+      setSwitchingRole(null);
+    }
   };
 
   return (
@@ -119,7 +133,7 @@ export default function Navbar() {
 
         {/* Right Section: 1-Click Demo Switcher + Notifications + Auth State */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          {/* Quick Demo Switcher Pill */}
+          {/* Role Switcher Pill */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -129,50 +143,62 @@ export default function Navbar() {
             padding: '2px 4px',
             fontSize: '0.78rem',
           }}>
-            <span style={{ padding: '0 6px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '3px' }}>
-              <Sparkles size={12} color="#818CF8" /> Demo:
-            </span>
             <button
+              type="button"
               onClick={() => handleDemoSwitch('student')}
+              disabled={switchingRole !== null}
               style={{
                 background: isStudent ? 'var(--primary)' : 'transparent',
                 color: isStudent ? '#ffffff' : 'var(--text-secondary)',
                 border: 'none',
                 borderRadius: 'var(--radius-full)',
-                padding: '3px 8px',
-                cursor: 'pointer',
+                padding: '3px 10px',
+                cursor: switchingRole ? 'wait' : 'pointer',
                 fontWeight: 600,
+                transition: 'all var(--transition-fast)',
+                opacity: switchingRole && switchingRole !== 'student' ? 0.6 : 1,
               }}
+              title="Switch to Student Account (Munira Tebarek)"
             >
-              Student
+              {switchingRole === 'student' ? 'Switching...' : 'Student'}
             </button>
             <button
+              type="button"
               onClick={() => handleDemoSwitch('company')}
+              disabled={switchingRole !== null}
               style={{
                 background: isCompany ? 'var(--primary)' : 'transparent',
                 color: isCompany ? '#ffffff' : 'var(--text-secondary)',
                 border: 'none',
                 borderRadius: 'var(--radius-full)',
-                padding: '3px 8px',
-                cursor: 'pointer',
+                padding: '3px 10px',
+                cursor: switchingRole ? 'wait' : 'pointer',
                 fontWeight: 600,
+                transition: 'all var(--transition-fast)',
+                opacity: switchingRole && switchingRole !== 'company' ? 0.6 : 1,
               }}
+              title="Switch to Company Account (CBE / Telebirr)"
             >
-              Company
+              {switchingRole === 'company' ? 'Switching...' : 'Company'}
             </button>
             <button
+              type="button"
               onClick={() => handleDemoSwitch('admin')}
+              disabled={switchingRole !== null}
               style={{
                 background: isAdmin ? '#D97706' : 'transparent',
                 color: isAdmin ? '#ffffff' : 'var(--text-secondary)',
                 border: 'none',
                 borderRadius: 'var(--radius-full)',
-                padding: '3px 8px',
-                cursor: 'pointer',
+                padding: '3px 10px',
+                cursor: switchingRole ? 'wait' : 'pointer',
                 fontWeight: 600,
+                transition: 'all var(--transition-fast)',
+                opacity: switchingRole && switchingRole !== 'admin' ? 0.6 : 1,
               }}
+              title="Switch to Admin Console"
             >
-              Admin
+              {switchingRole === 'admin' ? 'Switching...' : 'Admin'}
             </button>
           </div>
 
