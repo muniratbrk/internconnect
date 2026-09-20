@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 import { 
   Shield, 
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 export default function AdminDashboard() {
+  const { user } = useAuth();
   const { toast } = useNotification();
 
   const [analytics, setAnalytics] = useState(null);

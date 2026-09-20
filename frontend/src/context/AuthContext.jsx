@@ -56,7 +56,14 @@ export function AuthProvider({ children }) {
     } else if (role === 'admin') {
       credentials = { email: 'admin@internconnect.et', password: 'password123' };
     }
-    return login(credentials.email, credentials.password);
+    try {
+      return await login(credentials.email, credentials.password);
+    } catch (err) {
+      if (role === 'student') {
+        return await login('yohannes.t@aait.edu.et', 'password123');
+      }
+      throw err;
+    }
   };
 
   const logout = () => {

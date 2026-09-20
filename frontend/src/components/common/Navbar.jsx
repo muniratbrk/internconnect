@@ -9,18 +9,13 @@ import {
   User, 
   LogOut, 
   PlusCircle, 
-  Shield, 
-  CheckCircle2,
-  Sparkles,
-  Menu,
-  X
+  Shield 
 } from 'lucide-react';
 
 export default function Navbar() {
   const { user, profile, isAuthenticated, isStudent, isCompany, isAdmin, logout, demoLogin } = useAuth();
   const { notifications, unreadCount, markRead, markAllRead, toast } = useNotification();
   const [showNotifications, setShowNotifications] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [switchingRole, setSwitchingRole] = useState(null);
   const navigate = useNavigate();
 
@@ -37,10 +32,8 @@ export default function Navbar() {
       const roleName = role === 'student' ? 'Student' : role === 'company' ? 'Company' : 'Admin';
       toast(`Switched to ${roleName} mode (${res.profile?.full_name || res.profile?.company_name || 'Admin'})!`, 'success');
       const targetPath = role === 'student' ? '/student-dashboard' : role === 'company' ? '/company-dashboard' : '/admin-dashboard';
-      if (window.location.pathname === targetPath) {
-        navigate(0);
-      } else {
-        navigate(targetPath);
+      if (window.location.pathname !== targetPath) {
+        navigate(targetPath, { replace: true });
       }
     } catch (err) {
       toast(err.message || `Failed to switch to ${role}.`, 'error');

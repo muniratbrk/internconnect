@@ -29,7 +29,7 @@ const PIPELINE_STAGES = [
 ];
 
 export default function CompanyDashboard() {
-  const { profile } = useAuth();
+  const { user, profile } = useAuth();
   const { toast } = useNotification();
   const navigate = useNavigate();
 
