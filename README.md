@@ -37,8 +37,8 @@
 
 ## 👤 User Roles & Workflows
 
-### 1. Student (`yohannes.t@aait.edu.et` / `password123`)
-- **Profile**: Full bio, Ethiopian university selector (AAiT, AASTU, ASTU, etc.), academic department, field of study, skills tag manager (React, Python, Flutter, PostgreSQL, etc.), GPA, and PDF resume upload.
+### 1. Student (`muniratbrk@act.edu.et` / `password123`)
+- **Profile**: Full bio, Ethiopian university selector (ACT, AAiT, AASTU, ASTU, etc.), academic department, field of study, skills tag manager (React, Python, Flutter, PostgreSQL, etc.), GPA, and PDF resume upload.
 - **Discovery**: Search and filter internships by department, specialized field of study, Ethiopian city/region, skill tags, and duration.
 - **Match Compatibility**: Real-time compatibility meter breaking down matching skills, department alignment, and missing competencies.
 - **Application Flow**: Apply with customized cover note and attached resume. Celebratory confetti feedback upon submission.
@@ -64,7 +64,7 @@ All demo accounts share the password: `password123`
 
 | Role | Email | Password | Details |
 |---|---|---|---|
-| **Student** | `yohannes.t@aait.edu.et` | `password123` | Yohannes Tesfaye (AAiT Senior • Software Engineering • Full-Stack) |
+| **Student** | `muniratbrk@act.edu.et` | `password123` | Munira Tebarek (ACT Senior • Computer Science • Full-Stack) |
 | **Student** | `bethlehem.a@aastu.edu.et` | `password123` | Bethlehem Alemayehu (AASTU Senior • AI & NLP • Python / PyTorch) |
 | **Student** | `dawit.h@astu.edu.et` | `password123` | Dawit Haile (ASTU Junior • Electrical & Computer • Embedded/IoT) |
 | **Student** | `selamawit.b@bit.edu.et` | `password123` | Selamawit Bekele (BiT Senior • IT & Cloud • Linux / Cybersecurity) |
@@ -241,7 +241,7 @@ This verifies:
 - Health checks
 - Student & Company authentication (Ethiopian accounts)
 - Department & Field-of-study filtering
-- Algorithmic match scoring (verified Yohannes @ CBE Telebirr = 70% match)
+- Algorithmic match scoring (verified Munira @ CBE Telebirr = 70% match)
 - Recommendations engine
 - Company postings & pipeline counts
 - Admin analytics calculation & verified badge toggling

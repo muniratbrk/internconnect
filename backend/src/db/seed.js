@@ -123,15 +123,15 @@ async function seedDatabase() {
     const icogId = icogCompany.rows[0].id;
 
     // 3. Insert Ethiopian Students
-    // Student 1: Yohannes Tesfaye (AAiT)
-    const yohannesUser = await query(`
+    // Student 1: Munira Tebarek (American College of Technology)
+    const muniraUser = await query(`
       INSERT INTO users (email, password_hash, role, is_verified)
       VALUES ($1, $2, 'student', TRUE)
       RETURNING id
-    `, ['yohannes.t@aait.edu.et', passwordHash]);
-    const yohannesUserId = yohannesUser.rows[0].id;
+    `, ['muniratbrk@act.edu.et', passwordHash]);
+    const muniraUserId = muniraUser.rows[0].id;
 
-    const yohannesProfile = await query(`
+    const muniraProfile = await query(`
       INSERT INTO student_profiles (
         user_id, full_name, headline, bio, university, department, field_of_study, major,
         graduation_year, gpa, skills, resume_url, avatar_url, portfolio_url, github_url, linkedin_url,
@@ -139,26 +139,26 @@ async function seedDatabase() {
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
       RETURNING id
     `, [
-      yohannesUserId,
-      'Yohannes Tesfaye',
-      'Software Engineering Senior @ Addis Ababa University (AAiT)',
-      'Passionate full-stack developer experienced in building web platforms with React, Node.js, and PostgreSQL. Contributor to local open-source and active participant in Ethiopian hackathons.',
-      'Addis Ababa University (AAiT)',
-      'Software Engineering',
+      muniraUserId,
+      'Munira Tebarek',
+      'Computer Science Senior @ American College of Technology (ACT)',
+      'Passionate full-stack developer experienced in building web platforms with React, Node.js, and PostgreSQL. Contributor to open-source and active participant in Ethiopian hackathons.',
+      'American College of Technology (ACT)',
+      'Computer Science',
       'Web & Full-Stack Development',
-      'Software Engineering',
+      'Computer Science',
       2026,
       3.89,
       ['React', 'Node.js', 'TypeScript', 'PostgreSQL', 'Express', 'TailwindCSS', 'REST APIs'],
-      'https://example.com/resumes/yohannes_tesfaye_resume.pdf',
+      'https://example.com/resumes/munira_tebarek_resume.pdf',
       'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80',
-      'https://yohanestech.et',
-      'https://github.com/yohanest',
-      'https://linkedin.com/in/yohanest',
+      'https://github.com/muniratbrk',
+      'https://github.com/muniratbrk',
+      'https://linkedin.com/in/muniratbrk',
       'Summer 2026',
       'Addis Ababa, Ethiopia'
     ]);
-    const yohannesId = yohannesProfile.rows[0].id;
+    const muniraId = muniraProfile.rows[0].id;
 
     // Student 2: Bethlehem Alemayehu (AASTU)
     const bettyUser = await query(`
@@ -422,33 +422,33 @@ async function seedDatabase() {
     ]);
 
     // 5. Insert Applications
-    // Yohannes -> CBE Fullstack (Interviewing)
-    const appYohannesCbe = await query(`
+    // Munira -> CBE Fullstack (Interviewing)
+    const appMuniraCbe = await query(`
       INSERT INTO applications (
         internship_id, student_id, resume_url, cover_note, status, company_notes
       ) VALUES ($1, $2, $3, $4, 'interview', 'Excellent performance in technical screening. Deep knowledge of React and PostgreSQL relational queries.')
       RETURNING id
     `, [
       cbeJob1Id,
-      yohannesId,
-      'https://example.com/resumes/yohannes_tesfaye_resume.pdf',
-      'Greetings CBE Digital Team! As an AAiT software engineering student, I have built web applications integrating Telebirr payment simulation. I am eager to contribute to CBE digital banking infrastructure this summer.'
+      muniraId,
+      'https://example.com/resumes/munira_tebarek_resume.pdf',
+      'Greetings CBE Digital Team! As a Computer Science student at American College of Technology (ACT), I have built web applications integrating modern APIs and databases. I am eager to contribute to CBE digital banking infrastructure this summer.'
     ]);
-    const appYohannesCbeId = appYohannesCbe.rows[0].id;
+    const appMuniraCbeId = appMuniraCbe.rows[0].id;
 
-    // Yohannes -> Safaricom M-Pesa (Accepted!)
-    const appYohannesSafaricom = await query(`
+    // Munira -> Safaricom M-Pesa (Accepted!)
+    const appMuniraSafaricom = await query(`
       INSERT INTO applications (
         internship_id, student_id, resume_url, cover_note, status, company_notes
       ) VALUES ($1, $2, $3, $4, 'accepted', 'Unanimously approved. Official internship offer extended.')
       RETURNING id
     `, [
       safaricomJob1Id,
-      yohannesId,
-      'https://example.com/resumes/yohannes_tesfaye_resume.pdf',
+      muniraId,
+      'https://example.com/resumes/munira_tebarek_resume.pdf',
       'Safaricom is transforming digital connectivity in Ethiopia. I am passionate about scaling reliable client-facing products and would love to join your engineering team.'
     ]);
-    const appYohannesSafaricomId = appYohannesSafaricom.rows[0].id;
+    const appMuniraSafaricomId = appMuniraSafaricom.rows[0].id;
 
     // Bethlehem -> iCog Labs (Under Review)
     await query(`
@@ -475,36 +475,36 @@ async function seedDatabase() {
     ]);
 
     // 6. Insert Conversations & Thread Messages
-    // Conversation 1: Yohannes & CBE Recruiter
-    const convCbeYohannes = await query(`
+    // Conversation 1: Munira & CBE Recruiter
+    const convCbeMunira = await query(`
       INSERT INTO conversations (application_id, student_id, company_id)
       VALUES ($1, $2, $3)
       RETURNING id
-    `, [appYohannesCbeId, yohannesId, cbeId]);
-    const convCbeYohannesId = convCbeYohannes.rows[0].id;
+    `, [appMuniraCbeId, muniraId, cbeId]);
+    const convCbeMuniraId = convCbeMunira.rows[0].id;
 
     await query(`
       INSERT INTO messages (conversation_id, sender_user_id, content, is_read)
       VALUES 
-      ($1, $2, 'Selam Yohannes! Thank you for applying to CBE Digital Banking. Your AAiT coursework and GitHub projects look very impressive.', TRUE),
+      ($1, $2, 'Selam Munira! Thank you for applying to CBE Digital Banking. Your ACT coursework and GitHub projects look very impressive.', TRUE),
       ($1, $3, 'Selam! Thank you so much for considering my application. I am thrilled about the opportunity to work on Telebirr solutions!', TRUE),
       ($1, $2, 'We would like to invite you for an in-person technical discussion next Tuesday at the CBE Headquarters in Sengatera. Does 10:00 AM work for you?', FALSE)
-    `, [convCbeYohannesId, cbeUserId, yohannesUserId]);
+    `, [convCbeMuniraId, cbeUserId, muniraUserId]);
 
-    // Conversation 2: Yohannes & Safaricom Ethiopia
-    const convSafaricomYohannes = await query(`
+    // Conversation 2: Munira & Safaricom Ethiopia
+    const convSafaricomMunira = await query(`
       INSERT INTO conversations (application_id, student_id, company_id)
       VALUES ($1, $2, $3)
       RETURNING id
-    `, [appYohannesSafaricomId, yohannesId, safaricomId]);
-    const convSafaricomYohannesId = convSafaricomYohannes.rows[0].id;
+    `, [appMuniraSafaricomId, muniraId, safaricomId]);
+    const convSafaricomMuniraId = convSafaricomMunira.rows[0].id;
 
     await query(`
       INSERT INTO messages (conversation_id, sender_user_id, content, is_read)
       VALUES 
-      ($1, $2, 'Congratulations Yohannes! Following your final interview, Safaricom Ethiopia is pleased to extend you an official internship offer.', TRUE),
+      ($1, $2, 'Congratulations Munira! Following your final interview, Safaricom Ethiopia is pleased to extend you an official internship offer.', TRUE),
       ($1, $3, 'Thank you so much! This is wonderful news. I will review the acceptance documentation immediately.', TRUE)
-    `, [convSafaricomYohannesId, safaricomUserId, yohannesUserId]);
+    `, [convSafaricomMuniraId, safaricomUserId, muniraUserId]);
 
     // 7. Insert Notifications
     await query(`
@@ -514,17 +514,17 @@ async function seedDatabase() {
       ($1, 'Congratulations! Offer Accepted', 'Safaricom Ethiopia extended you an official internship offer.', '/student-dashboard', 'application_status', FALSE),
       ($2, 'New Candidate Application', 'Dawit Haile applied for Mobile Financial Services (M-Pesa) Engineering Intern.', '/company-dashboard', 'new_application', FALSE),
       ($3, 'Employer Verification Review', 'iCog Labs has submitted company credentials for verification.', '/admin-dashboard', 'admin_verification', FALSE)
-    `, [yohannesUserId, safaricomUserId, adminId]);
+    `, [muniraUserId, safaricomUserId, adminId]);
 
     // 8. Insert Review
     await query(`
       INSERT INTO reviews (internship_id, student_id, company_id, reviewer_role, rating, comment)
       VALUES ($1, $2, $3, 'student', 5, 'Exceptional experience working with the CBE digital banking team. Mentors were accessible and gave us real impact on merchant APIs!')
-    `, [cbeJob1Id, yohannesId, cbeId]);
+    `, [cbeJob1Id, muniraId, cbeId]);
 
     console.log('Database seeded successfully with authentic Ethiopian data!');
     console.log('Demo Accounts:');
-    console.log(' - Student: yohannes.t@aait.edu.et / password123 (AAiT, Software Eng, Addis Ababa)');
+    console.log(' - Student: muniratbrk@act.edu.et / password123 (ACT, Computer Science, Addis Ababa)');
     console.log(' - Company: careers@cbe.com.et / password123 (CBE / Telebirr)');
     console.log(' - Company: internships@ethiotelecom.et / password123 (Ethio Telecom)');
     console.log(' - Admin:   admin@internconnect.et / password123');

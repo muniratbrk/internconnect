@@ -51,11 +51,11 @@ async function runTests() {
     const health = await request('/health');
     console.log('✔ Health Check:', health.status === 200 ? 'PASSED' : 'FAILED', health.body);
 
-    // 2. Student Login (Yohannes Tesfaye @ AAiT)
+    // 2. Student Login (Munira Tebarek @ ACT)
     const studentLogin = await request('/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: { email: 'yohannes.t@aait.edu.et', password: 'password123' },
+      body: { email: 'muniratbrk@act.edu.et', password: 'password123' },
     });
     console.log('✔ Student Login:', studentLogin.status === 200 ? 'PASSED' : 'FAILED');
     const studentToken = studentLogin.body.token;
@@ -64,7 +64,7 @@ async function runTests() {
     const me = await request('/auth/me', {
       headers: { Authorization: `Bearer ${studentToken}` },
     });
-    console.log('✔ Student Profile Verification:', me.body.profile.full_name === 'Yohannes Tesfaye' ? 'PASSED' : 'FAILED');
+    console.log('✔ Student Profile Verification:', me.body.profile.full_name === 'Munira Tebarek' ? 'PASSED' : 'FAILED');
     console.log(`   Department: ${me.body.profile.department} | Field: ${me.body.profile.field_of_study}`);
 
     // 4. Internship List with Department & Matching

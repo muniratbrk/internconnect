@@ -50,7 +50,7 @@ export function AuthProvider({ children }) {
 
   // 1-Click Demo Login Switcher (Ethiopian Context)
   const demoLogin = async (role) => {
-    let credentials = { email: 'yohannes.t@aait.edu.et', password: 'password123' };
+    let credentials = { email: 'muniratbrk@act.edu.et', password: 'password123' };
     if (role === 'company') {
       credentials = { email: 'careers@cbe.com.et', password: 'password123' };
     } else if (role === 'admin') {

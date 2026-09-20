@@ -89,9 +89,9 @@ export default function Login() {
                 className="btn btn-secondary btn-sm"
                 disabled={loading}
                 style={{ fontSize: '0.75rem', padding: '0.45rem 0.2rem', whiteSpace: 'nowrap' }}
-                title="Yohannes Tesfaye (AAiT Software Engineering)"
+                title="Munira Tebarek (ACT Computer Science)"
               >
-                Student (AAiT)
+                Student (ACT)
               </button>
               <button
                 type="button"
@@ -124,7 +124,7 @@ export default function Login() {
                 <input
                   type="email"
                   className="form-input"
-                  placeholder="e.g. yohannes.t@aait.edu.et"
+                  placeholder="e.g. muniratbrk@act.edu.et"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required

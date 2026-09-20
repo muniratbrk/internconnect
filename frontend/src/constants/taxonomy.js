@@ -10,6 +10,7 @@ export const ETHIOPIAN_UNIVERSITIES = [
   'Haramaya University',
   'Arba Minch University',
   'Wollo University (KIOT)',
+  'American College of Technology (ACT)',
   'Dilla University',
 ];
 
